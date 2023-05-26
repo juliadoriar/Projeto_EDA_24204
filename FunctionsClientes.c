@@ -6,11 +6,11 @@
  * \date   April 2023
  *********************************************************************/
 #include "FunctionsClientes.h"
-#include "Structs.h"
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#define CHAR 500
 
 /**
  * Função que cria novo cliente.
@@ -23,33 +23,62 @@
  * \param saldo
  * \return
  */
-ListaCliente* criarCliente(Cliente* c)
+ListaCliente* criarCliente(Cliente c)
 {
-	ListaCliente* novoCliente = (Cliente*)malloc(sizeof(Cliente));
+	ListaCliente* novoCliente = (ListaCliente*)malloc(sizeof(ListaCliente));
 	if (novoCliente == NULL) return NULL;
-	novoCliente->cliente = *c;
+	novoCliente->cliente = c;
 	novoCliente->proximo = NULL;
+	
 	return novoCliente;
-
 }
 
-ListaClientePtr* inserirCliente(ListaClientePtr c, Cliente* inicio)
+/**
+ * Função que insere o cliente criado em uma lista.
+ * 
+ * \param c
+ * \param inicio
+ * \return 
+ */
+ListaClientePtr inserirCliente(ListaClientePtr c, Cliente* inicio)
 {
+	if (existeCliente(c, inicio->id)) return c;	
 
-
-	if (inicio == NULL) {
-		inicio = c;
+	ListaClientePtr aux = (ListaClientePtr)malloc(sizeof(ListaCliente));
+	aux->cliente = *inicio;
+	aux->proximo = NULL; 
+	
+	if (c == NULL)		
+	{
+		c = aux;
 	}
-	else {
-		c->proximo = inicio;
-		inicio = c;
+	else
+	{
+		aux->proximo = c->proximo;	
+		c->proximo = aux;
 	}
-
 	return c;
-
 }
 
+/**
+ * Função que verifica se o cliente de id passado por parâmetro já existe na lista.
+ * 
+ * \param c
+ * \param id
+ * \return 
+ */
+bool existeCliente(ListaClientePtr c, int id) {
 
+	if (c == NULL) return false;
+	ListaClientePtr aux = c;
+	while (aux != NULL) {
+		if (aux->cliente.id == id) {
+			return true;
+					}
+		aux = aux->proximo;
+		}
+	return false;
+}
 
 /**
  * Função recursiva para guardar clientes da lista em um ficheiro binário.
@@ -57,21 +86,20 @@ ListaClientePtr* inserirCliente(ListaClientePtr c, Cliente* inicio)
  * \param inicio
  * \return
  */
-bool guardarClienteBin(Cliente* inicio, char arquivo[])
+bool guardarClienteBin(ListaClientePtr inicio)
 {
 	FILE* fp = fopen("Clientes.bin", "wb");
-	if (inicio == NULL) return false;
-	if (fp == NULL){
-		return false;
-	}
+	if (inicio == NULL || fp == NULL) {
 
-	Cliente* atual = inicio;
+		return false;
+
+	}
+	ListaClientePtr atual = inicio;
+	Cliente auxCliente;
 	while (atual != NULL)
 	{
-		Cliente aux = *atual;
-		aux.proximo = NULL;
-		fwrite(&aux, sizeof(Cliente), 1, fp);
-		//fwrite(&(atual->id),&(atual->nome),&(atual->nif),&(atual->morada),&(atual->saldo), aux, sizeof(Cliente), 1, fp);
+		auxCliente = atual->cliente;
+		fwrite(&auxCliente, sizeof(Cliente), 1, fp);
 		atual = atual->proximo;
 	}
 
@@ -80,28 +108,33 @@ bool guardarClienteBin(Cliente* inicio, char arquivo[])
 }
 
 /**
- * Função que recebe a lista de clientes como parâmetro e a salva em ficheiro de texto e binário, assim como lista na tela.
+ * Função que recebe a lista de clientes como parâmetro e imprime na tela os dados de todos os clientes.
  *
  * \param inicio
  */
-bool listarClientes(Cliente* inicio)
+void listarClientes(ListaClientePtr inicio)
 {
-	FILE* fp = fopen("Clientes.txt", "a");
-	if (inicio == NULL) return false;
-	Cliente* aux = inicio;
+	ListaClientePtr aux = inicio;
 
-	if (fp == NULL) {
-		return false;
-	}
 	while (aux != NULL)
 	{
-		fprintf(fp, "%d; %s; %d; %s; %f\n", aux->id, aux->nome, aux->nif, aux->morada, aux->saldo);
-		printf("% d; %s; % d; %s; % f\n", aux->id, aux->nome, aux->nif, aux->morada, aux->saldo);
+		MostraCliente(aux);
 		aux = aux->proximo;
 	}
-	fclose(fp);
-	//guardarClienteBin(inicio, "Clientes.bin");
-	return true;
+}
+
+/**
+ * Função para imprimir os dados de um só cliente.
+ * 
+ * \param no
+ */
+void MostraCliente(ListaClientePtr no)
+{
+	if (no != NULL) {
+
+		printf("Id = %d; Nome = %s; NIF = %d; Morada = %s; Saldo = %f\n", no->cliente.id, no->cliente.nome, no->cliente.nif, no->cliente.morada, no->cliente.saldo);
+
+	}
 }
 
 /**
@@ -111,34 +144,31 @@ bool listarClientes(Cliente* inicio)
  * \param identificador
  * \return
  */
-Cliente* removerCliente(Cliente* inicio, int identificador)
+ListaClientePtr removerCliente(ListaClientePtr inicio, int identificador)
 {
-	Cliente* atual = inicio;
-	Cliente* anterior = NULL;
+	ListaClientePtr atual = inicio;
+	ListaClientePtr anterior = NULL;
 
 	//remover o primeiro nó da lista
-	if (atual != NULL && atual->id == identificador) {
+	if (atual != NULL && atual->cliente.id == identificador) {
 		inicio = atual->proximo;
 		free(atual);
 		return (inicio);
 	}
 	//percorrer a lista para navegar todos os nós e remover o que foi passado no parâmetro
-	while (atual != NULL && atual->id != identificador) {
+	while (atual != NULL && atual->cliente.id != identificador) {
 		anterior = atual;
 		atual = atual->proximo;
 	}
-
 	//no caso do nó não ser encontrado na lista, retorna a lista
 	if (atual == NULL) {
 		return inicio;
 	}
-
 	//sendo encontrado o nó ele é removido, e sua memória liberada
 	else {
 		anterior->proximo = atual->proximo;
 		free(atual);
 	}
-
 	return (inicio);
 }
 
@@ -149,16 +179,17 @@ Cliente* removerCliente(Cliente* inicio, int identificador)
  * \param identificador
  * \return
  */
-Cliente* buscarCliente(Cliente* inicio, int identificador) {
-	Cliente* atual = inicio;
-
+ListaClientePtr buscarCliente(ListaClientePtr inicio, int identificador) {
+	
+	ListaClientePtr atual = inicio;
+	
 	while (atual != NULL) {
-		if (atual->id == identificador) {
-			return atual;
+		if (atual->cliente.id == identificador) { 
+			return atual; //se o id do atual for igual ao id encontrado, retorna atual
 		}
 		atual = atual->proximo;
 	}
-	return NULL;
+	return NULL; //não sendo nenhum encontrado, retorna null
 }
 
 /**
@@ -172,55 +203,49 @@ Cliente* buscarCliente(Cliente* inicio, int identificador) {
  * \param novamorada
  * \param novosaldo
  */
-bool alterarCliente(Cliente* inicio, int identificador, int novoid, char novonome[], int novonif, char novamorada[], float novosaldo) {
-	if (inicio == NULL) return false;
-
-	Cliente* cliente = buscarCliente(inicio, identificador);
+ListaClientePtr alterarCliente(ListaClientePtr inicio, int identificador, int novoid, char novonome[], int novonif, char novamorada[], float novosaldo) {
+	
+	ListaClientePtr cliente = buscarCliente(inicio, identificador); 
 	if (cliente != NULL) {
-		cliente->id = novoid;
-		strcpy(cliente->nome, novonome);
-		cliente->nif = novonif;
-		strcpy(cliente->morada, novamorada);
-		cliente->saldo = novosaldo;
+		cliente->cliente.id = novoid;
+		strcpy(cliente->cliente.nome, novonome);
+		cliente->cliente.nif = novonif;
+		strcpy(cliente->cliente.morada, novamorada);
+		cliente->cliente.saldo = novosaldo;
 
-	} return true;
+	} return inicio;
 }
 
-/**
- * Função para ler ficheiro de texto e alocar em lista.
- *
- * \param inicio
- * \param arquivo
- * \return
- */
-Cliente* lerFicheiroCliente(Cliente* inicio, char *nomeFi) {
-	FILE* fp;
-	fp = fopen("Clientes.txt", "r");
-	int id;
-	char nome[50];
-	int nif;
-	char morada[100];
-	float saldo;
 
+/**
+ * Função que lê um ficheiro de texto contendo os dados de um cliente, e insere-os em uma lista.
+ * 
+ * \param inicio
+ * \param nomeFicheiro
+ * \return 
+ */
+ListaClientePtr lerFicheiroCliente(ListaClientePtr inicio,  char nomeFicheiro[]) {
+	FILE* fp;
+	fp = fopen(nomeFicheiro, "r");
 
 	if (fp == NULL)
 	{
 		return NULL;
-		//printf("Erro ao abrir arquivo");
-		//exit(1);
-	}	
-	Cliente* cliente = NULL;
-	while (!feof(fp) != NULL)
-	{
-		//criar cliente com malloc
-		cliente = criarCliente(cliente, id, nome, nif, morada, saldo);
-		fscanf(fp, "%d;%50[^;];%d;%100[^;];%f\n", &id, nome, &nif, morada, &saldo);
+	}
 
-		
+	ListaClientePtr c = NULL;
+	Cliente aux;
+	
 
-
+	char linha[256];
+	while (fgets(linha, sizeof(linha), fp) != NULL) {
+		if (sscanf(linha, "%d;%[^;];%d;%[^;];%f", &aux.id, aux.nome, &aux.nif, aux.morada, &aux.saldo) == 5) {
+			ListaClientePtr novoCliente = criarCliente(aux); 
+			c = inserirCliente(c, novoCliente); 
+		}
 	}
 
 	fclose(fp);
-	return inicio;
+	
+	return c;
 }

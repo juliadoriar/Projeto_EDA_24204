@@ -10,40 +10,42 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "FunctionsAux.h"
+#include <locale.h>
 #include "FunctionsAlugueres.h"
 #include "FunctionsMeios.h"
 #include "FunctionsClientes.h"
-#include "Structs.h"
+#include "Grafos.h"
 
 int main() {
 
-	Cliente* c = NULL;
-	MeioMob* m = NULL;
-	Aluguer* a = NULL;
-	Gestor* g = NULL;
-	/*Cliente* ptr = NULL;
-	Cliente* inicio = NULL;
-	Cliente* atual = NULL;*/
-	Aluguer* inicioA = NULL;
+	setlocale(LC_ALL, "Portuguese");
 
-	g = criarGestor(g, 99, "Julia");
 
-	c = criarCliente(c, 3, "Maria", 333333333, "Rua do umbu", 40.00);
-	c = criarCliente(c, 4, "Joana", 444444444, "Rua da jaca", 50.00);
-	c = criarCliente(c, 5, "Luis", 555555555, "Rua do caju", 30.00);
-	c = criarCliente(c, 6, "Luisa", 666666666, "Rua da amora", 40.00);
 
-	m = criarMeio(m, 1, "trotinete", 55, 55, 2.5, "Feira");
-	m = criarMeio(m, 2, "bicicleta", 44, 44, 3.5, "Salvador");
-	m = criarMeio(m, 3, "trotinete", 33, 33, 2.5, "Feira");
-	m = criarMeio(m, 4, "bicicleta", 88, 88, 2.5, "Feira");
+	ListaClientePtr c = NULL; 
+	ListaAluguerPtr a = NULL;
+	ListaMeioPtr m = NULL;
 
-	//c = lerFicheiroCliente(c);
 
-	alterarCliente(c, 5, 7, "Luis", 777777777, "Rua da siriguela", 35.00);
+	c = lerFicheiroCliente(c, "Clientes.txt");
 
-	c = removerCliente(c, 4);
+	Cliente c1 = {1, "Maria", 333333333, "Rua do umbu", 40.00 }; 
+	c = inserirCliente(c, &c1); 
+	Cliente c2 = {2, "Joana", 444444444, "Rua da jaca", 50.00 };
+	c = inserirCliente(c, &c2); 
+	Cliente c3 = {3, "Luis", 555555555, "Rua do caju", 30.00 };
+	c = inserirCliente(c, &c3);  
+
+	MeioMob m1 = {1, "trotinete", 30, 30, 2, "Mucuge"};
+	m = inserirMeio(m, &m1); 
+	MeioMob m2 = {2, "bicicleta", 40, 40, 3, "Salvador"};
+	m = inserirMeio(m, &m2); 
+	MeioMob m3 = {3, "trotinete", 50, 50, 2, "Feira"};
+	m = inserirMeio(m, &m3);
+
+	c = alterarCliente(c, 1, 7, "Maria", 777777777, "Rua da siriguela", 35.00);
+
+	c = removerCliente(c, 3);  
 
 	listarClientes(c);
 
@@ -55,10 +57,38 @@ int main() {
 
 	listarMeiosMob(m);
 
-	//a = criarAluguer(c, a, 1, 2, 3, 10.00);
-	//a = criarAluguer(c, a, 2, 2, 3, 5.00);
+	Aluguer a1 = {1, 1, 1, 10.00 };
+	a = inserirAluguer(a, &a1, &c1);
+	Aluguer a2 = { 2, 2, 3, 5.00 };
+	a = inserirAluguer(a, &a2, &c2);
 
-	//listarAlugueres(a);
+	listarAlugueres(a);
+
+	guardarClienteBin(c);
+
+
+
+	Adj* adj = NULL;
+	Vertice* v = NULL;
+
+
+	Vertice* grafo = criarGrafo();
+
+	bool vis;
+
+	grafo = inserirVertice(grafo, "Salvador", 1, &vis); 
+
+	grafo = inserirVertice(grafo, "Feira", 2, &vis); 
+
+	grafo = inserirVertice(grafo, "Itacare", 3, &vis); 
+	
+
+	
+	mostrarGrafo(grafo); 
+
+	grafo = destruirGrafo(grafo);
+
+	
 
 	return(0);
 }

@@ -24,10 +24,10 @@
     <ClInclude Include="FunctionsAlugueres.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="FunctionsAux.h">
+    <ClInclude Include="FunctionsGestores.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Structs.h">
+    <ClInclude Include="Grafos.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -44,7 +44,10 @@
     <ClCompile Include="FunctionsAlugueres.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="FunctionsAux.c">
+    <ClCompile Include="FunctionsGestores.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Grafos.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -6,14 +6,14 @@
  * \date   April 2023
  *********************************************************************/
 #include "FunctionsMeios.h"
-#include "Structs.h"
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #include <stdbool.h>
 
+
 /**
- * Função que cria novo meio de mobilidade e insere na lista.
+ * Função que cria novo meio de mobilidade dentro da estrutura ListaMeio.
  *
  * \param inicio
  * \param id
@@ -23,30 +23,64 @@
  * \param localizacao
  * \return
  */
-MeioMob* criarMeio(MeioMob* inicio, int id, char tipo[], float carga, float autonomia, float custo, char localizacao[])
+ListaMeioPtr criarMeio(MeioMob* m)
 {
-	MeioMob* m = (MeioMob*)malloc(sizeof(MeioMob));
-	if (m == NULL) return NULL;
-	m->proximo = NULL;
+	ListaMeioPtr novoMeio = (MeioMob*)malloc(sizeof(MeioMob));
+	if (novoMeio == NULL) return NULL;
+	novoMeio->meio = *m;
+	novoMeio->proximo= NULL;
 
-	m->id = id;
-	strcpy(m->tipo, tipo);
-	m->carga = carga;
-	m->autonomia = autonomia;
-	m->custo = custo;
-	strcpy(m->localizacao, localizacao);
+	return novoMeio;
+}
 
-	if (inicio == NULL) {
-		inicio = m;
+/**
+ * Função que insere o meio criado na lista encadeada de meios de mobilidade.
+ * 
+ * \param m
+ * \param inicio
+ * \return 
+ */
+ListaMeioPtr inserirMeio(ListaMeioPtr m, MeioMob* inicio)
+{
+	if (existeMeio(m, inicio->id)) return m;
+
+	ListaMeioPtr aux = (ListaMeioPtr)malloc(sizeof(ListaMeio));
+	aux->meio = *inicio;
+	aux->proximo = NULL;
+
+	if (m == NULL) {
+		m = aux;
 	}
 	else {
-		m->proximo = inicio;
-		inicio = m;
+		aux->proximo = m->proximo;
+		m->proximo = aux;
 	}
 
 	return m;
-
+	
 }
+
+/**
+ * Função recursiva para verificar se o meio do id passado por parâmetro já existe na lista
+ * Em caso afirmativo, a função devolve verdadeiro. Em caso negativo, devolve falso.
+ * 
+ * \param m
+ * \param id
+ * \return 
+ */
+bool existeMeio(ListaMeioPtr m, int id) {
+
+	if (m == NULL) return false;
+	ListaMeioPtr aux = m;
+	while (aux != NULL) {
+		if (aux->meio.id == id)
+			return true;
+		aux = aux->proximo;
+	}
+	return false;
+}
+
+
 
 /**
  *  * Função recursiva para guardar os meios de mobilidade da lista em um ficheiro binário.
@@ -54,22 +88,21 @@ MeioMob* criarMeio(MeioMob* inicio, int id, char tipo[], float carga, float auto
  * \param inicio
  * \param arquivo
  */
-bool guardarMeioMobBin(MeioMob* inicio, char arquivo[])
+bool guardarMeioMobBin(ListaMeioPtr inicio, char arquivo)
 {
-	FILE* fp = fopen("MeiosMob.bin", "wb");
-	if (inicio == NULL) return false;
+	FILE* fp = fopen(arquivo, "wb");
+	
 	if (fp == NULL)
 	{
-		printf("Erro ao abrir o arquivo");
-		return;
+		return false;
 	}
 
-	MeioMob* atual = inicio;
+	ListaMeioPtr atual = inicio;
+	MeioMob auxMeio; 
 	while (atual != NULL)
 	{
-		MeioMob aux = *atual;
-		aux.proximo = NULL;
-		fwrite(&aux, sizeof(MeioMob), 1, fp);
+		auxMeio = atual->meio;
+		fwrite(&auxMeio, sizeof(MeioMob), 1, fp);
 		atual = atual->proximo;
 	}
 
@@ -78,51 +111,59 @@ bool guardarMeioMobBin(MeioMob* inicio, char arquivo[])
 }
 
 /**
- * Função que recebe a lista de meios de mobilidade como parâmetro e a salva em ficheiro de texto e binário, assim como lista na tela.
+ * Função que recebe a lista de meios de mobilidade como parâmetro e lista todos eles na tela.
  *
  * \param inicio
  */
-void listarMeiosMob(MeioMob* inicio)
+bool listarMeiosMob(ListaMeioPtr inicio)
 {
-	FILE* fp = fopen("MeiosMob.txt", "a");
-	
-	MeioMob* aux = inicio;
+	if (inicio == NULL) return false;
+	ListaMeioPtr aux = inicio;
 
-	if (fp == NULL) {
-		printf("Erro ao abrir arquivo");
-		return;
-	}
 	while (aux != NULL)
 	{
-		fprintf(fp, "%d; %s; %f	; %f; %f; %s\n", aux->id, aux->tipo, aux->carga, aux->autonomia, aux->custo, aux->localizacao);
-		printf("%d; %s; %f	; %f; %f; %s\n", aux->id, aux->tipo, aux->carga, aux->autonomia, aux->custo, aux->localizacao);
+		MostraMeio(aux);
 		aux = aux->proximo;
 	}
-	fclose(fp);
-	guardarMeioMobBin(inicio, "MeiosMob.bin");
-	
+
+	return true;
 }
 
 /**
- * Função para remoção de uma struct MeioMob da lista através do seu id.
+ * Função recursiva para imprimir um meio de mobilidade.
+ * 
+ * \param no
+ */
+void MostraMeio(MeioMob* no)
+{
+	if (no != NULL) {
+
+		printf("Id = %d; Tipo = %s; Carga = %f; Autonomia = %f; Custo = %f; Localizacao = %s\n", no->id, no->tipo, no->carga, no->autonomia, no->custo, no->localizacao);
+
+	}
+}
+
+
+/**
+ * Função para remoção de um meio da lista através do seu id.
  *
  * \param inicio
  * \param identificador
  * \return
  */
-MeioMob* removerMeioMob(MeioMob* inicio, int identificador)
+ListaMeioPtr removerMeioMob(ListaMeioPtr inicio, int identificador)
 {
-	MeioMob* atual = inicio;
-	MeioMob* anterior = NULL;
+	ListaMeioPtr atual = inicio;
+	ListaMeioPtr anterior = NULL;
 
 	//remover o primeiro nó da lista
-	if (atual != NULL && atual->id == identificador) {
+	if (atual != NULL && atual->meio.id == identificador) {
 		inicio = atual->proximo;
 		free(atual);
 		return (inicio);
 	}
 	//percorrer a lista para navegar todos os nós e remover o que foi passado no parâmetro
-	while (atual != NULL && atual->id != identificador) {
+	while (atual != NULL && atual->meio.id != identificador) {
 		anterior = atual;
 		atual = atual->proximo;
 	}
@@ -145,11 +186,11 @@ MeioMob* removerMeioMob(MeioMob* inicio, int identificador)
  * \param identificador
  * \return
  */
-MeioMob* buscarMeioMob(MeioMob* inicio, int identificador) {
-	MeioMob* atual = inicio;
+ListaMeioPtr buscarMeioMob(ListaMeioPtr inicio, int identificador) {
+	ListaMeioPtr atual = inicio;
 
 	while (atual != NULL) {
-		if (atual->id == identificador) {
+		if (atual->meio.id == identificador) {
 			return atual;
 		}
 		atual = atual->proximo;
@@ -169,28 +210,29 @@ MeioMob* buscarMeioMob(MeioMob* inicio, int identificador) {
  * \param custo
  * \param localizacao
  */
-bool alterarMeioMob(MeioMob* inicio, int identificador, int id, char tipo[], float carga, float autonomia, float custo, char localizacao[]) {
+ListaMeioPtr alterarMeioMob(ListaMeioPtr* inicio, int identificador, int id, char tipo[], float carga, float autonomia, float custo, char localizacao[]) {
 	if (inicio == NULL) return false;
-	MeioMob* meio = buscarMeioMob(inicio, identificador);
-	if (meio != NULL) {
-		meio->id = id;
-		strcpy(meio->tipo, tipo);
-		meio->carga = carga;
-		meio->autonomia = autonomia;
-		meio->custo = custo;
-		strcpy(meio->localizacao, localizacao);
+	ListaMeioPtr m = buscarMeioMob(inicio, identificador);
+	if (m != NULL) {
+		m->meio.id = id;
+		strcpy(m->meio.tipo, tipo);
+		m->meio.carga = carga;
+		m->meio.autonomia = autonomia;
+		m->meio.custo = custo;
+		strcpy(m->meio.localizacao, localizacao);
 	} return  true;
 }
 
 /**
- * Função que ordena os meios de mobilidade em ordem decresente e salva na memória.
+ * Função que ordena os meios de mobilidade em ordem decrescente e salva na memória.
  *
  * \param inicio
  */
-bool ordenarMeioMob(MeioMob* inicio) {
+bool ordenarMeioMob(ListaMeioPtr inicio) {
 	if (inicio == NULL) return false;
-	MeioMob* atual;
-	MeioMob* seguinte;
+	ListaMeioPtr atual;
+	ListaMeioPtr seguinte;
+	
 	int troca = 1;
 
 	while (troca) {
@@ -199,10 +241,10 @@ bool ordenarMeioMob(MeioMob* inicio) {
 
 		while (atual->proximo != NULL) {
 			seguinte = atual->proximo;
-			if (atual->autonomia < seguinte->autonomia) {
-				float aux = atual->autonomia;
-				atual->autonomia = seguinte->autonomia;
-				seguinte->autonomia = aux;
+			if (atual->meio.autonomia < seguinte->meio.autonomia) {
+				float aux = atual->meio.autonomia;
+				atual->meio.autonomia = seguinte->meio.autonomia;
+				seguinte->meio.autonomia = aux;
 				troca = 1;
 			}
 			atual = atual->proximo;
@@ -211,13 +253,45 @@ bool ordenarMeioMob(MeioMob* inicio) {
 }
 
 /*
-bool listarMeioMobLocalizacao(MeioMob* inicio, char localizacao[]){
-	if (inicio == NULL) return false;
-	MeioMob* meio = (MeioMob*)malloc(sizeof(MeioMob));
+void trocaMeio(ListaMeioPtr atual, ListaMeioPtr seguinte) {
+
+	MeioMob aux = atual->meio;
+	atual->meio = seguinte->meio;
+	seguinte->meio = aux;
+
+}
+
+bool ordenaMeio(ListaMeioPtr inicio) {
+
+	int troca;
+	ListaMeioPtr atual;
+	ListaMeioPtr seguinte = NULL;
+
+	if (inicio = NULL) return false;
+
+	do {
+
+		troca = 0;
+		atual = inicio;
+
+		while (atual->proximo != seguinte) {
+
+			if (atual->meio.autonomia < seguinte->meio.autonomia) {
+
+				trocaMeio(atual, atual->proximo);
+				troca = 1;
+
+			}
+
+			seguinte = atual;
+		} while (troca);
+	}
+}
+	*/
 
 
 
-}*/
+
 
 
 

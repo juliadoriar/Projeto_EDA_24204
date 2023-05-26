@@ -5,8 +5,7 @@
  * \author julia
  * \date   March 2023
  *********************************************************************/
-#include "FunctionsAux.h"
-#include "Structs.h"
+#include "FunctionsGestores.h"
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -19,15 +18,13 @@
  * \param nome
  * \return
  */
-Gestor* criarGestor(Gestor* inicio, int id, char nome[])
+ListaGestor* criarGestor(Gestor g)
 {
-	Gestor* g = malloc(sizeof(Gestor));
-	if (g != NULL)
-	{
-		g->id = id;
-		strcpy(g->nome, nome);
+	ListaGestor* novoGestor = (ListaGestor*)malloc(sizeof(ListaGestor));
+	if (novoGestor != NULL)
+		novoGestor->gestor = g;
+		novoGestor->proximo = NULL;
 
-		return g;
-	}
-	else return(inicio);
+		return novoGestor;
+	
 }

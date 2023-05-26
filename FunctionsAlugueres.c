@@ -6,50 +6,81 @@
  * \date   April 2023
  *********************************************************************/
 #include "FunctionsAlugueres.h"
-#include "Structs.h"
+#include "FunctionsClientes.h"
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 
 /**
- * Função para criar um novo aluguel e ao final alterar o saldo do cliente locatário.
- *
- * \param inicioC
- * \param inicioA
- * \param id
- * \param idMeio
- * \param idCliente
- * \param custo
- * \return
+ * Função que cria um aluguer dentro da estrutura ListaAluguer.
+ * 
+ * \param a
+ * \return 
  */
-Aluguer* criarAluguer(Cliente* inicioC, Aluguer* inicioA, int id, int idMeio, int idCliente, float custo)
+ListaAluguerPtr criarAluguer(Aluguer* a)
 {
-	Aluguer* novoAluguer = (Aluguer*)malloc(sizeof(Aluguer));
-
+	ListaAluguerPtr novoAluguer = (ListaAluguer*)malloc(sizeof(ListaAluguer));
 	if (novoAluguer == NULL) return NULL;
+	novoAluguer->aluguer = *a;
 	novoAluguer->proximo = NULL;
-
-	novoAluguer->id = id;
-	novoAluguer->idMeio = idMeio;
-	novoAluguer->idCliente = idCliente;
-	novoAluguer->custo = custo;
-
-	if (inicioA == NULL) {
-		inicioA = novoAluguer;
-	}
-	else {
-		novoAluguer->proximo = inicioA;
-		inicioA = novoAluguer;
-	}
-
-	Cliente* clienteUtente = buscarCliente(inicioC, idCliente);
-	int identificador = clienteUtente->id;
-	float novoSaldo = clienteUtente->saldo - novoAluguer->custo;
-
-	alterarCliente(inicioC, identificador, clienteUtente->id, clienteUtente->nome, clienteUtente->nif, clienteUtente->morada, novoSaldo);
 
 	return novoAluguer;
 }
+
+/**
+ * Função para inserir o aluguer criado em uma lista encadeada de alugueres.
+ * 
+ * \param inicio
+ * \param a
+ * \param c
+ * \return 
+ */
+ListaAluguerPtr inserirAluguer(ListaAluguerPtr inicio, Aluguer* a, Cliente* c)
+{
+	if (existeAluguer(inicio, a->id)) return inicio;
+	
+	ListaAluguerPtr novoAluguer = (ListaAluguerPtr)malloc(sizeof(ListaAluguer));
+	novoAluguer->aluguer = *a;
+	novoAluguer->proximo = NULL;
+
+
+	if (inicio == NULL) {
+		inicio = novoAluguer;
+	}
+	else {
+		novoAluguer->proximo = inicio;
+		inicio = novoAluguer;
+	}
+
+	Cliente* clienteUtilizador = c;
+	clienteUtilizador->saldo = clienteUtilizador->saldo - novoAluguer->aluguer.custo;
+
+	alterarCliente(clienteUtilizador, clienteUtilizador->id, clienteUtilizador->id, clienteUtilizador->nome, clienteUtilizador->nif, clienteUtilizador->morada, clienteUtilizador->saldo);
+	
+	return novoAluguer;
+}
+
+
+/**
+ * Função recursiva para obter a informação se existe ou não o aluguer passado por parâmetro dentro da lista.
+ * 
+ * \param a
+ * \param id
+ * \return 
+ */
+bool existeAluguer(ListaAluguerPtr a, int id) {
+
+	if (a == NULL) return false;
+	ListaAluguerPtr aux = a;
+	while (aux != NULL) {
+		if (aux->aluguer.id == id)
+			return true;
+		aux = aux->proximo;
+	}
+	return false;
+}
+
+
 
 /**
  * Função para guardar a lista de alugueres em um ficheiro binário.
@@ -57,21 +88,22 @@ Aluguer* criarAluguer(Cliente* inicioC, Aluguer* inicioA, int id, int idMeio, in
  * \param inicio
  * \param arquivo
  */
-bool guardarAluguerBin(Aluguer* inicio, char arquivo[]) {
-	FILE* fp = fopen("Aluguer.bin", "wb");
+bool guardarAluguerBin(ListaAluguerPtr* inicio, char arquivo) {
+	FILE* fp = fopen(arquivo, "wb");
 	if (inicio == NULL) return false;
 	if (fp == NULL)
 	{
 		printf("Erro ao abrir o arquivo!");
-		return;
+		return false;
 	}
 
-	Aluguer* atual = inicio;
+	ListaAluguerPtr atual = inicio;
+	Aluguer auxAluguer;
+
 	while (atual != NULL)
 	{
-		Aluguer aux = *atual;
-		aux.proximo = NULL;
-		fwrite(&aux, sizeof(Aluguer), 1, fp);
+		auxAluguer = atual->aluguer;
+		fwrite(&auxAluguer, sizeof(Aluguer), 1, fp);
 		atual = atual->proximo;
 	}
 	fclose(fp);
@@ -79,26 +111,39 @@ bool guardarAluguerBin(Aluguer* inicio, char arquivo[]) {
 }
 
 /**
- * Função que lista os alugueres em memória na tela e em um ficheiro de texto e binário.
+ * Função que lista os alugueres em memória na tela.
  *
  * \param inicio
  */
-void listarAlugueres(Aluguer* inicio)
+bool listarAlugueres(ListaAluguerPtr* inicio)
 {
 	FILE* fp = fopen("Aluguer.txt", "a");
-	Aluguer* aux = inicio;
+	ListaAluguerPtr aux = inicio;
 
 	if (fp == NULL) {
-		printf("Erro ao abrir arquivo");
-		return;
+		return false;
 	}
 	while (aux != NULL)
 	{
-		fprintf(fp, "%d; %d; %d; %f\n", aux->id, aux->idMeio, aux->idCliente, aux->custo);
-		printf("% d; % d; % d; % f\n", aux->id, aux->idMeio, aux->idCliente, aux->custo);
-		aux = aux->proximo;
+		{
+			MostraAluguer(aux);
+			aux = aux->proximo;
+		}
 	}
 	fclose(fp);
-	guardarAluguerBin(inicio, "Aluguer.bin");
+	return true;
 }
 
+/**
+ * Função recursiva que imprime para a tela os dados de um aluguer.
+ * 
+ * \param no
+ */
+void MostraAluguer (Aluguer* no)
+{
+	if (no != NULL) {
+
+		printf("Id = %d; IdMeio = %d; IdCliente = %d; Custo = %f\n", no->id, no->idMeio, no->idCliente, no->custo);
+
+	}
+}

@@ -7,32 +7,53 @@
  *********************************************************************/
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdlib.h>
-#include <stdbool.h>
 #include <string.h>
-#include "Structs.h"
-
+#include <stdbool.h>
 #pragma once
 
+#define MAX 50
+
+typedef struct {
+	int id;
+	char tipo[MAX];
+	float carga; // carga de energia disponivel 
+	float autonomia;
+	float custo;
+	char localizacao[MAX];
+}MeioMob;
+
+typedef struct {
+	MeioMob meio;
+	struct ListaMeio *proximo;
+}ListaMeio, * ListaMeioPtr;
 
 //Função para criar novo meio de mobilidadade
-MeioMob* criarMeio(MeioMob* inicio, int id, char tipo[], float carga, float autonomia, float custo, char localizacao[]);
+ListaMeioPtr criarMeio(MeioMob* m);
+
+//Função para inserir o meio criado em uma lista
+ListaMeioPtr inserirMeio(ListaMeioPtr m, MeioMob* inicio); 
+
+//Função para verificar existência de um meio em uma lista
+bool existeMeio(ListaMeioPtr m, int id);
 
 //Função recursiva para salvar lista de meios de mobilidade em ficheiro binário
-bool guardarMeioMobBin(MeioMob* m, char arquivo[]);
+bool guardarMeioMobBin(ListaMeioPtr inicio, char arquivo);
 
 //Função para listar meios de mobilidade em um ficheiro de texto
-void listarMeiosMob(MeioMob* inicio);
+bool listarMeiosMob(ListaMeioPtr inicio);
+
+void MostraMeio(MeioMob* no);
 
 //função para remover um nó da lista de clientes
-MeioMob* removerMeioMob(MeioMob* inicio, int id);
+ListaMeioPtr removerMeioMob(ListaMeioPtr inicio, int identificador);
 
 //função recursiva que encontra um nó na lista através do id
-MeioMob* buscarMeioMob(MeioMob* inicio, int identificador);
+ListaMeioPtr buscarMeioMob(ListaMeioPtr inicio, int identificador);
 
 //função para alterar dados de uma struct dentro de uma lista
-bool alterarMeioMob(MeioMob* inicio, int identificador, int id, char tipo[], float carga, float autonomia, float custo, char localizacao[]);
+ListaMeioPtr alterarMeioMob(ListaMeioPtr* inicio, int identificador, int id, char tipo[], float carga, float autonomia, float custo, char localizacao[]);
 
-//função para ordenar 
-bool ordenarMeioMob(MeioMob* inicio);
+//função para ordenar meio por ordem decrescente de autonomia
+bool ordenarMeioMob(ListaMeioPtr inicio);
 
 

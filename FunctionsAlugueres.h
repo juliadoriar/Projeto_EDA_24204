@@ -9,16 +9,36 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
-#include "Structs.h"
+#include "FunctionsClientes.h"
 
 #pragma once
 
+typedef struct {
+	int id;
+	int idMeio; //identificacao do meio alugado
+	int idCliente; //identificacao do locatário
+	float custo;
+}Aluguer;
+
+typedef struct {
+	Aluguer aluguer;
+	struct ListaAluguer *proximo;
+}ListaAluguer, *ListaAluguerPtr;
+
 //Função para criar novo aluguer
-Aluguer* criarAluguer(Cliente* inicioC, Aluguer* inicioA, int id, int idMeio, int idCliente, float custo);
+ListaAluguerPtr criarAluguer(Aluguer* a);
 
-//Função que guarda os aluguéis em um arquivo binário
-bool guardarAluguerBin(Aluguer* inicio, char arquivo[]);
+//Função para inserir o aluguer criado em uma lista
+ListaAluguerPtr inserirAluguer(ListaAluguerPtr inicio, Aluguer* a, Cliente* c);
 
-//Função para listar meios de mobilidade em um ficheiro de texto
-void listarAlugueres(Aluguer* inicio);
+//Função para verificar se existe o aluguer na lista
+bool existeAluguer(ListaAluguerPtr a, int id);
 
+//Função que guarda os alugueres em um arquivo binário
+bool guardarAluguerBin(ListaAluguerPtr* inicio, char arquivo);
+
+//Função para listar os alugueres na tela
+bool listarAlugueres(ListaAluguerPtr* inicio);
+
+//Função que imprime um aluguer
+void MostraAluguer(Aluguer* no);

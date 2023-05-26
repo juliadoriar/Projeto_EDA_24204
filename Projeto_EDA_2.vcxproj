@@ -127,15 +127,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="FunctionsAux.h" />
     <ClInclude Include="FunctionsAlugueres.h" />
     <ClInclude Include="FunctionsClientes.h" />
     <ClInclude Include="FunctionsMeios.h" />
-    <ClInclude Include="Structs.h" />
+    <ClInclude Include="Grafos.h" />
+    <ClCompile Include="Grafos.c">
+      <FileType>CppCode</FileType>
+    </ClCompile>
+    <ClInclude Include="FunctionsGestores.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FunctionsAlugueres.c" />
-    <ClCompile Include="FunctionsAux.c" />
+    <ClCompile Include="FunctionsGestores.c" />
     <ClCompile Include="FunctionsClientes.c" />
     <ClCompile Include="FunctionsMeio.c" />
     <ClCompile Include="Main.c" />
