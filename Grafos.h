@@ -52,8 +52,7 @@ Vertice* destruirGrafo(Vertice* v);
 void mostrarGrafo(Vertice* v);
 Vertice* buscarVertice(Vertice* v, char* cidade);
 Vertice* buscarVerticeId(Vertice* v, int id);
-bool lerGrafoFicheiro(Vertice* v, char nomeFicheiro[]);
-
+Vertice* lerGrafoFicheiro(Vertice* v, char nomeFicheiro[]);
 #pragma endregion
 
 #pragma region ADJ

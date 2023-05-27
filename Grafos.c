@@ -138,41 +138,7 @@ int inserirClienteVertice(Vertice* v, Cliente cliente) {
 	return 1;
 }
 
-/** Função para guardar as informações de cada vertice em um ficheiro de texto */
-bool guardarVerticesFicheiro(Vertice* v, char nomeFicheiro[]) {
-
-	FILE* fp;
-	fp = fopen(nomeFicheiro, "w");
-
-	if (v == NULL || fp == NULL) {
-		return false;
-	}
-
-	Vertice* atualVertice = v;
-
-	while (atualVertice != NULL) {
-
-		fprintf(fp, "- - - - - - - - ");
-		fprintf(fp, "\nVertice: %5d \t| Cidade: %11s \t|\n", atualVertice->id, atualVertice->localizacao);
-
-		ListaMeioPtr atualMeio = atualVertice->meio;
-		while (atualMeio != NULL) {
-			fprintf(fp, "Meio: Id: %5d \t| Tipo: %11s \t| Autonomia: %7.2f \t| Custo: %7.2f \t|\n", atualMeio->meio.id, atualMeio->meio.tipo, atualMeio->meio.autonomia, atualMeio->meio.custo);
-			atualMeio = atualMeio->proximo;
-		}
-
-		ListaClientePtr atualCliente = atualVertice->cliente;
-		while (atualCliente != NULL) {
-			fprintf(fp, "Cliente Id: %5d \t| Nome: %11s \t| NIF: %5d \t| Saldo: %7.2f \t| Endereço: %30s \t|\n", atualCliente->cliente.id, atualCliente->cliente.nome, atualCliente->cliente.nif, atualCliente->cliente.saldo, atualCliente->cliente.morada);
-			atualCliente = atualCliente->proximo;
-		}
-
-		atualVertice = atualVertice->proximo;
-	}
-	return true;
-}
-
-bool lerGrafoFicheiro(Vertice* v, char* nomeFicheiro[]) {
+Vertice* lerGrafoFicheiro(Vertice* v, char nomeFicheiro[])  {
 
 	FILE* fp;
 	fp = fopen(nomeFicheiro, "r");
@@ -187,7 +153,7 @@ bool lerGrafoFicheiro(Vertice* v, char* nomeFicheiro[]) {
 
 	bool vis;
 	
-	char linha[100];
+	char linha[50];
 	while (fgets(linha, sizeof(linha), fp) != NULL) {
 		if (sscanf(linha, "%d;%[^;]", &aux.id, aux.localizacao) == 2) {
 			vertice = inserirVertice(vertice, aux.localizacao, aux.id, &vis);
@@ -196,12 +162,18 @@ bool lerGrafoFicheiro(Vertice* v, char* nomeFicheiro[]) {
 
 	fclose(fp);
 
-	return v;
+	return vertice;
 }
 
-
-
-
+/** Função que retira a condição de visitado dos vertices de true para false */
+Vertice* zerarVerticeVisitado(Vertice* v) {
+	Vertice* aux = v;
+	while (aux) {
+		aux->visitado = false;
+		aux = aux->proximo;
+	}
+	return v;
+}
 
 #pragma endregion
 
@@ -216,7 +188,6 @@ Adj* criarAdj(int id, float distancia) {
 	novaAdj->proximo= NULL;
 	return novaAdj;
 }
-
 
 /** Função para mostrar as adjacencias do grafo */
 void mostrarAdj(Adj* adj) {
@@ -292,10 +263,30 @@ Vertice* inserirAdjVerticeId(Vertice* v, int idInicio, int idFim, float distanci
 
 }
 
+/** Função recursiva para guardar adjacencias em ficheiro binário */
+int guardarAdjacencia(Adj* adj, char* nomeFicheiro, int codVerticeOrigem) {
+	FILE* fp;
+
+	if (adj == NULL) return -2;
+	fp = fopen(nomeFicheiro, "ab");
+	if (fp == NULL) return -1;
+	Adj* aux = adj;
+	Adj auxFicheiro;
+	while (aux) {
+		auxFicheiro.id = aux->id;
+		auxFicheiro.id = codVerticeOrigem;
+		auxFicheiro.distancia = aux->distancia;
+		fwrite(&auxFicheiro, 1, sizeof(Adj), fp);
+		aux = aux->proximo;
+	}
+	fclose(fp);
+	return 1;
+}
+
 #pragma endregion
 
-#pragma region CAMINHO
 
+#pragma region CAMINHO
 /** Função recursiva para calcular caminhos entre dois vértices pelo Id */
 int calcularCaminho(Vertice* v, int idorigem, int iddestino, int contaCaminho) {
 	if (v == NULL) return 0;
@@ -321,7 +312,7 @@ int calcularCaminho(Vertice* v, int idorigem, int iddestino, int contaCaminho) {
 int calcularCaminhoNomeVertice(Vertice* v, char* origem, char* destino, int contaCaminho) {
 	int o = buscarVerticeId(v, origem);
 	int d = buscarVerticeId(v, destino);
-	return calcularCaminho(v, o, d, 0); 
+	return calcularCaminho(v, o, d, 0);
 }
 
 /** Função que visita vertices e adjacencias para verificar se existe caminnho entre dois vertices */
@@ -351,32 +342,28 @@ int existeCaminhoNome(Vertice* v, char* origem, char* destino) {
 	return existeCaminho(v, o, d);
 }
 
-/** Função que retira a condição de visitado dos vertices de true para false */
-Vertice* zerarVerticeVisitado(Vertice* v) {
-	Vertice* aux = v;
-	while (aux) {
-		aux->visitado = false;
-		aux = aux->proximo;
-	}
-	return v;
-}
+
+#pragma endregion
+
+
+#pragma region FICHEIROS
 
 /** Função que lista meios de determinado tipo em um raio de distancia do cliente */
 int listarMeiosPorTipoERaio(Vertice* v, char* localizacaoCliente, char* tipoMeio, float raio) {
-	
+
 	Vertice* cliente = buscarVertice(v, localizacaoCliente);
 
 	if (cliente == NULL) {
 		return -1;
 	}
-	
+
 	printf("\nMeios de mobilidade do tipo %s encontrados dentro de um raio de %.2f km:\n", tipoMeio, raio);
 
 	// Percorrer os vértices adjacentes ao cliente
 	Adj* adjAtual = cliente->adj;
 
 	while (adjAtual != NULL) {
-		Vertice* adj = buscarVerticeId(v, adjAtual->id); 
+		Vertice* adj = buscarVerticeId(v, adjAtual->id);
 
 		ListaMeioPtr meioAtual = adj->meio;
 
@@ -395,7 +382,7 @@ int listarMeiosPorTipoERaio(Vertice* v, char* localizacaoCliente, char* tipoMeio
 	return v;
 }
 
-/** Função que guarda vertices e ajacencias em um arquivo binário */
+/** Função que guarda vertices e ajacencias em um ficheiro binário */
 int guardarGrafoBinario(Vertice* v, char* nomeFicheiro) {
 	if (v == NULL) return -1;
 	FILE* fp;
@@ -420,34 +407,41 @@ int guardarGrafoBinario(Vertice* v, char* nomeFicheiro) {
 	return 1;
 }
 
+/** Função para guardar as informações de cada vertice em um ficheiro de texto */
+bool guardarVerticesFicheiro(Vertice* v, char nomeFicheiro[]) {
 
-int guardarAdjacencia(Adj* adj, char* nomeFicheiro, int codVerticeOrigem) {
 	FILE* fp;
+	fp = fopen(nomeFicheiro, "w");
 
-	if (adj == NULL) return -2;
-	fp = fopen(nomeFicheiro, "ab");
-	if (fp == NULL) return -1;
-	Adj* aux = adj;
-	Adj auxFicheiro;
-	while (aux) {
-		auxFicheiro.id = aux->id;
-		auxFicheiro.id = codVerticeOrigem;
-		auxFicheiro.distancia = aux->distancia;
-		fwrite(&auxFicheiro, 1, sizeof(Adj), fp);
-		aux = aux->proximo;
+	if (v == NULL || fp == NULL) {
+		return false;
 	}
-	fclose(fp);
-	return 1;
+
+	Vertice* atualVertice = v;
+
+	while (atualVertice != NULL) {
+
+		fprintf(fp, "- - - - - - - - ");
+		fprintf(fp, "\nVertice: %5d \t| Cidade: %11s \t|\n", atualVertice->id, atualVertice->localizacao);
+
+		ListaMeioPtr atualMeio = atualVertice->meio;
+		while (atualMeio != NULL) {
+			fprintf(fp, "Meio: Id: %5d \t| Tipo: %11s \t| Autonomia: %7.2f \t| Custo: %7.2f \t|\n", atualMeio->meio.id, atualMeio->meio.tipo, atualMeio->meio.autonomia, atualMeio->meio.custo);
+			atualMeio = atualMeio->proximo;
+		}
+
+		ListaClientePtr atualCliente = atualVertice->cliente;
+		while (atualCliente != NULL) {
+			fprintf(fp, "Cliente Id: %5d \t| Nome: %11s \t| NIF: %5d \t| Saldo: %7.2f \t| Endereço: %30s \t|\n", atualCliente->cliente.id, atualCliente->cliente.nome, atualCliente->cliente.nif, atualCliente->cliente.saldo, atualCliente->cliente.morada);
+			atualCliente = atualCliente->proximo;
+		}
+
+		atualVertice = atualVertice->proximo;
+	}
+	return true;
 }
 
-
-
 #pragma endregion
-
-
-
-
-
 
 
 

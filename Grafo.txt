@@ -1,0 +1,21 @@
+- - - - - - - - 
+Vertice:     5 	| Cidade:   Cachoeira 	|
+Cliente Id:     1 	| Nome:       Maria 	| NIF: 333333333 	| Saldo:   30,00 	| Endereço:                    Rua do umbu 	|
+- - - - - - - - 
+Vertice:     2 	| Cidade:       Feira 	|
+Meio: Id:     3 	| Tipo:   trotinete 	| Autonomia:   50,00 	| Custo:    2,00 	|
+- - - - - - - - 
+Vertice:     3 	| Cidade:     Itacare 	|
+- - - - - - - - 
+Vertice:     6 	| Cidade:  Itacimirim 	|
+Cliente Id:     2 	| Nome:       Joana 	| NIF: 444444444 	| Saldo:   45,00 	| Endereço:                    Rua da jaca 	|
+- - - - - - - - 
+Vertice:     7 	| Cidade:    Juazeiro 	|
+Meio: Id:     4 	| Tipo:   bicicleta 	| Autonomia:   70,00 	| Custo:    3,00 	|
+Cliente Id:     3 	| Nome:        Luis 	| NIF: 555555555 	| Saldo:   30,00 	| Endereço:                    Rua do caju 	|
+- - - - - - - - 
+Vertice:     4 	| Cidade:      Mucuge 	|
+Meio: Id:     1 	| Tipo:   trotinete 	| Autonomia:   30,00 	| Custo:    2,00 	|
+- - - - - - - - 
+Vertice:     1 	| Cidade:    Salvador 	|
+Meio: Id:     2 	| Tipo:   bicicleta 	| Autonomia:   40,00 	| Custo:    3,00 	|

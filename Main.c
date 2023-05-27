@@ -38,11 +38,11 @@ int main() {
 
 	MeioMob m1 = {1, "trotinete", 30, 30, 2, "Mucuge"};
 	m = inserirMeio(m, &m1); 
-	MeioMob m2 = {2, "bicicleta", 40, 40, 3, "Salvador"};
+	MeioMob m2 = {2, "bicicleta", 55, 55, 3, "Salvador"};
 	m = inserirMeio(m, &m2); 
-	MeioMob m3 = {3, "trotinete", 50, 50, 2, "Feira"};
+	MeioMob m3 = {3, "trotinete", 40, 40, 2, "Feira"};
 	m = inserirMeio(m, &m3);
-	MeioMob m4 = {4, "bicicleta", 30, 70, 3, "Itacare"};
+	MeioMob m4 = {4, "bicicleta", 70, 70, 3, "Itacare"};
 	m = inserirMeio(m, &m4);
 
 	c = alterarCliente(c, 1, 7, "Maria", 777777777, "Rua da siriguela", 35.00);
@@ -82,14 +82,14 @@ int main() {
 
 	bool vis;
 
-	lerGrafoFicheiro(v, "Vertices.txt"); 
+	grafo = lerGrafoFicheiro(v, "Vertices.txt");  
+
 	grafo = inserirVertice(grafo, "Salvador", 1, &vis);  
 	grafo = inserirVertice(grafo, "Feira", 2, &vis); 
 	grafo = inserirVertice(grafo, "Itacare", 3, &vis); 
 	grafo = inserirVertice(grafo, "Mucuge", 4, &vis); 
 	grafo = inserirVertice(grafo, "Cachoeira", 5, &vis);
 	grafo = inserirVertice(grafo, "Itacimirim", 6, &vis);
-	//grafo = inserirVertice(grafo, "Juazeiro", 7, &vis);
 
 
 	grafo = inserirAdjVerticeId(grafo, 1, 2, 120, &vis); //  insere adjacencia de salvador para feira 
@@ -98,9 +98,13 @@ int main() {
 	grafo = inserirAdjVerticeId(grafo, 4, 1, 300, &vis); //  insere adjacencia de mucuge para salvador
 	grafo = inserirAdjVerticeId(grafo, 2, 4, 100, &vis); //  insere adjacencia de feira para mucugê
 	grafo = inserirAdjVerticeId(grafo, 4, 5, 50, &vis);  //  insere adjacencia de mucuge para cachoeira
-	grafo = inserirAdjVerticeId(grafo, 5, 6, 250, &vis); //  insere adjacencia de cachoeira para itacimirim
-	grafo = inserirAdjVerticeId(grafo, 6, 1, 140, &vis); //  insere adjacencia de itacimirim para salvador
-	grafo = inserirAdjVerticeId(grafo, 5, 1, 50, &vis);  //  insere adjacencia de cachoeira para itacimirim
+	grafo = inserirAdjVerticeId(grafo, 5, 6, 50, &vis); //  insere adjacencia de cachoeira para itacimirim
+	grafo = inserirAdjVerticeId(grafo, 5, 1, 50, &vis);  //  insere adjacencia de cachoeira para salvador
+	grafo = inserirAdjVerticeId(grafo, 6, 1, 80, &vis);  //  insere adjacencia de itacimirim para salvador
+	grafo = inserirAdjVerticeId(grafo, 7, 2, 100, &vis); //  insere adjacencia de juazeiro para feira
+	grafo = inserirAdjVerticeId(grafo, 7, 3, 100, &vis); //  insere adjacencia de juazeiro para itacare
+	grafo = inserirAdjVerticeId(grafo, 5, 2, 30, &vis);  //  insere adjacencia de itacimirim para feira
+
 
 
 	Vertice* vertice1 = buscarVerticeId(grafo, 4);
@@ -141,14 +145,14 @@ int main() {
 	//guardarVerticesFicheiro(grafo, "Vertices.txt");
 	guardarGrafoBinario(grafo, "Grafo.bin");
 
-	listarMeiosPorTipoERaio(grafo, "Cachoeira", "trotinete", 100); 
-	listarMeiosPorTipoERaio(grafo, "Itacimirim", "bicicleta", 100);
+	listarMeiosPorTipoERaio(grafo, "Cachoeira", "trotinete", 400); 
+	listarMeiosPorTipoERaio(grafo, "Itacimirim", "bicicleta", 300);
 
 
 	printf("\nGRAFO:\n"); 
 	mostrarGrafo(grafo); 
 
-
+	guardarVerticesFicheiro(grafo, "Grafo.txt");
 
 	//grafo = destruirGrafo(grafo);
 
