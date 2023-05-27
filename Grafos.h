@@ -50,10 +50,32 @@ Vertice* criarVertice(char* cidade, int id);
 Vertice* inserirVertice(Vertice* v, char* localizacao, int id, bool* vis);
 Vertice* destruirGrafo(Vertice* v);
 void mostrarGrafo(Vertice* v);
+Vertice* buscarVertice(Vertice* v, char* cidade);
+Vertice* buscarVerticeId(Vertice* v, int id);
+bool lerGrafoFicheiro(Vertice* v, char nomeFicheiro[]);
+
 #pragma endregion
 
 #pragma region ADJ
-
+Adj* criarAdj(int id, float distancia);
 Adj* destruirAdjacencia(Adj* adj);
 void mostrarAdj(Adj* adj);
+bool existeAdj(Adj* adj, int id);
+Adj* inserirAdj(Adj* adj, Adj* novaAdj, bool* vis);
+Vertice* inserirAdjVerticeId(Vertice* v, int idInicio, int idFim, float distancia, bool* vis);
+int inserirMeioVertice(Vertice* v, MeioMob meio);
+bool guardarVerticesFicheiro(Vertice* v, char nomeFicheiro[]);
+int inserirClienteVertice(Vertice* v, Cliente cliente);
+int calcularCaminho(Vertice* v, int idorigem, int iddestino, int contaCaminho);
+int calcularCaminhoNomeVertice(Vertice* v, char* origem, char* destino, int contaCaminho);
+bool existeCaminho(Vertice* v, int origem, int destino);
+int existeCaminhoNome(Vertice* v, char* origem, char* destino);
+Vertice* zerarVerticeVisitado(Vertice* v);
+int listarMeiosPorTipoERaio(Vertice* v, char* localizacaoCliente, char* tipoMeio, float raio);
+
+
+
+
+int guardarGrafoBinario(Vertice* v, char* nomeFicheiro);
+int guardarAdjacencia(Adj* adj, char* nomeFicheiro, int codVerticeOrigem);
 #pragma endregion
