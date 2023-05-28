@@ -1,4 +1,4 @@
-/*****************************************************************//**
+	/*****************************************************************//**
  * \file   FunctionsMeio.c
  * \brief  Funções de gestão dos meios de mobilidade
  * 
@@ -12,17 +12,7 @@
 #include <stdbool.h>
 
 
-/**
- * Função que cria novo meio de mobilidade dentro da estrutura ListaMeio.
- *
- * \param inicio
- * \param id
- * \param tipo
- * \param carga
- * \param autonomia
- * \param localizacao
- * \return
- */
+/** Função que cria novo meio de mobilidade dentro da estrutura ListaMeio */
 ListaMeioPtr criarMeio(MeioMob* m)
 {
 	ListaMeioPtr novoMeio = (MeioMob*)malloc(sizeof(MeioMob));
@@ -33,13 +23,7 @@ ListaMeioPtr criarMeio(MeioMob* m)
 	return novoMeio;
 }
 
-/**
- * Função que insere o meio criado na lista encadeada de meios de mobilidade.
- * 
- * \param m
- * \param inicio
- * \return 
- */
+/** Função que insere o meio criado na lista encadeada de meios de mobilidade */
 ListaMeioPtr inserirMeio(ListaMeioPtr m, MeioMob* inicio)
 {
 	if (existeMeio(m, inicio->id)) return m;
@@ -60,14 +44,8 @@ ListaMeioPtr inserirMeio(ListaMeioPtr m, MeioMob* inicio)
 	
 }
 
-/**
- * Função recursiva para verificar se o meio do id passado por parâmetro já existe na lista
- * Em caso afirmativo, a função devolve verdadeiro. Em caso negativo, devolve falso.
- * 
- * \param m
- * \param id
- * \return 
- */
+/** Função recursiva para verificar se o meio do id passado por parâmetro já existe na lista
+ * Em caso afirmativo, a função devolve verdadeiro. Em caso negativo, devolve falso. */
 bool existeMeio(ListaMeioPtr m, int id) {
 
 	if (m == NULL) return false;
@@ -80,14 +58,7 @@ bool existeMeio(ListaMeioPtr m, int id) {
 	return false;
 }
 
-
-
-/**
- *  * Função recursiva para guardar os meios de mobilidade da lista em um ficheiro binário.
- *
- * \param inicio
- * \param arquivo
- */
+/** Função recursiva para guardar os meios de mobilidade da lista em um ficheiro binário */
 bool guardarMeioMobBin(ListaMeioPtr inicio, char arquivo)
 {
 	FILE* fp = fopen(arquivo, "wb");
@@ -110,11 +81,7 @@ bool guardarMeioMobBin(ListaMeioPtr inicio, char arquivo)
 	return true;
 }
 
-/**
- * Função que recebe a lista de meios de mobilidade como parâmetro e lista todos eles na tela.
- *
- * \param inicio
- */
+/** Função que recebe a lista de meios de mobilidade como parâmetro e lista todos eles na tela */
 bool listarMeiosMob(ListaMeioPtr inicio)
 {
 	if (inicio == NULL) return false;
@@ -129,11 +96,7 @@ bool listarMeiosMob(ListaMeioPtr inicio)
 	return true;
 }
 
-/**
- * Função recursiva para imprimir um meio de mobilidade.
- * 
- * \param no
- */
+/** Função recursiva para imprimir um meio de mobilidade */
 void MostraMeio(MeioMob* no)
 {
 	if (no != NULL) {
@@ -143,14 +106,7 @@ void MostraMeio(MeioMob* no)
 	}
 }
 
-
-/**
- * Função para remoção de um meio da lista através do seu id.
- *
- * \param inicio
- * \param identificador
- * \return
- */
+/** Função para remoção de um meio da lista através do seu id. */
 ListaMeioPtr removerMeioMob(ListaMeioPtr inicio, int identificador)
 {
 	ListaMeioPtr atual = inicio;
@@ -179,13 +135,7 @@ ListaMeioPtr removerMeioMob(ListaMeioPtr inicio, int identificador)
 	return (inicio);
 }
 
-/**
- * Função recursiva para buscar um nó na lista de meios de mobilidade.
- *
- * \param inicio
- * \param identificador
- * \return
- */
+/** Função recursiva para buscar um nó na lista de meios de mobilidade */
 ListaMeioPtr buscarMeioMob(ListaMeioPtr inicio, int identificador) {
 	ListaMeioPtr atual = inicio;
 
@@ -198,18 +148,7 @@ ListaMeioPtr buscarMeioMob(ListaMeioPtr inicio, int identificador) {
 	return NULL;
 }
 
-/**
- * Função que altera os dados da struct MeioMob dentro da lista.
- *
- * \param inicio
- * \param identificador
- * \param id
- * \param tipo
- * \param carga
- * \param autonomia
- * \param custo
- * \param localizacao
- */
+/** Função que altera os dados da struct MeioMob dentro da lista */
 ListaMeioPtr alterarMeioMob(ListaMeioPtr* inicio, int identificador, int id, char tipo[], float carga, float autonomia, float custo, char localizacao[]) {
 	if (inicio == NULL) return false;
 	ListaMeioPtr m = buscarMeioMob(inicio, identificador);
@@ -223,11 +162,7 @@ ListaMeioPtr alterarMeioMob(ListaMeioPtr* inicio, int identificador, int id, cha
 	} return  true;
 }
 
-/**
- * Função que ordena os meios de mobilidade em ordem decrescente e salva na memória.
- *
- * \param inicio
- */
+/** Função que ordena os meios de mobilidade em ordem decrescente e salva na memória */
 bool ordenarMeioMob(ListaMeioPtr inicio) {
 	if (inicio == NULL) return false;
 	ListaMeioPtr atual;
@@ -252,42 +187,7 @@ bool ordenarMeioMob(ListaMeioPtr inicio) {
 	} return true;
 }
 
-/*
-void trocaMeio(ListaMeioPtr atual, ListaMeioPtr seguinte) {
 
-	MeioMob aux = atual->meio;
-	atual->meio = seguinte->meio;
-	seguinte->meio = aux;
-
-}
-
-bool ordenaMeio(ListaMeioPtr inicio) {
-
-	int troca;
-	ListaMeioPtr atual;
-	ListaMeioPtr seguinte = NULL;
-
-	if (inicio = NULL) return false;
-
-	do {
-
-		troca = 0;
-		atual = inicio;
-
-		while (atual->proximo != seguinte) {
-
-			if (atual->meio.autonomia < seguinte->meio.autonomia) {
-
-				trocaMeio(atual, atual->proximo);
-				troca = 1;
-
-			}
-
-			seguinte = atual;
-		} while (troca);
-	}
-}
-	*/
 
 
 

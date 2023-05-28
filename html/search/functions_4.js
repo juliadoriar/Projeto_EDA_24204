@@ -1,0 +1,9 @@
+var searchData=
+[
+  ['existeadj_0',['existeAdj',['../_grafos_8c.html#a588be8bbbce08af325506846d44b6ad0',1,'existeAdj(Adj *adj, int id):&#160;Grafos.c'],['../_grafos_8h.html#a588be8bbbce08af325506846d44b6ad0',1,'existeAdj(Adj *adj, int id):&#160;Grafos.c']]],
+  ['existealuguer_1',['existeAluguer',['../_functions_alugueres_8c.html#aee4ba570870c91b9182a49ad17e68c55',1,'existeAluguer(ListaAluguerPtr a, int id):&#160;FunctionsAlugueres.c'],['../_functions_alugueres_8h.html#aee4ba570870c91b9182a49ad17e68c55',1,'existeAluguer(ListaAluguerPtr a, int id):&#160;FunctionsAlugueres.c']]],
+  ['existecaminho_2',['existeCaminho',['../_grafos_8c.html#a905391a44b5c3e921b6ee43cf4a83931',1,'existeCaminho(Vertice *v, int origem, int destino):&#160;Grafos.c'],['../_grafos_8h.html#a905391a44b5c3e921b6ee43cf4a83931',1,'existeCaminho(Vertice *v, int origem, int destino):&#160;Grafos.c']]],
+  ['existecaminhonome_3',['existeCaminhoNome',['../_grafos_8c.html#a9f928d9442d32566939982d39df03d33',1,'existeCaminhoNome(Vertice *v, char *origem, char *destino):&#160;Grafos.c'],['../_grafos_8h.html#a9f928d9442d32566939982d39df03d33',1,'existeCaminhoNome(Vertice *v, char *origem, char *destino):&#160;Grafos.c']]],
+  ['existecliente_4',['existeCliente',['../_functions_clientes_8c.html#a52fbfd9ca11e3f224bbeed065269ac12',1,'existeCliente(ListaClientePtr c, int id):&#160;FunctionsClientes.c'],['../_functions_clientes_8h.html#a52fbfd9ca11e3f224bbeed065269ac12',1,'existeCliente(ListaClientePtr c, int id):&#160;FunctionsClientes.c']]],
+  ['existemeio_5',['existeMeio',['../_functions_meio_8c.html#ac77d52614881a50297d69e49110b4ff2',1,'existeMeio(ListaMeioPtr m, int id):&#160;FunctionsMeio.c'],['../_functions_meios_8h.html#ac77d52614881a50297d69e49110b4ff2',1,'existeMeio(ListaMeioPtr m, int id):&#160;FunctionsMeio.c']]]
+];

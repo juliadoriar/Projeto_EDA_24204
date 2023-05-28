@@ -1,0 +1,181 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.6"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Trab_EDA_Final_24204: CÃ³digo-Fonte de Grafos.h</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Trab_EDA_Final_24204
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Gerado por Doxygen 1.9.6 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Localizar');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Carregando...</div>
+<div class="SRStatus" id="Searching">Procurando...</div>
+<div class="SRStatus" id="NoMatches">Nenhuma entrada encontrada</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">Grafos.h</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="_grafos_8h.html">Ir para a documentaÃ§Ã£o deste ficheiro.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/*****************************************************************/</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#define _CRT_SECURE_NO_WARNINGS</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &lt;stdbool.h&gt;</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &lt;string.h&gt;</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &quot;<a class="code" href="_functions_clientes_8h.html">FunctionsClientes.h</a>&quot;</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#include &quot;<a class="code" href="_functions_meios_8h.html">FunctionsMeios.h</a>&quot;</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span> </div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="preprocessor">#define MAX 50</span></div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno"><a class="line" href="struct_adj.html">   22</a></span><span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code hl_struct" href="struct_adj.html">Adj</a> {</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>    <span class="keywordtype">int</span> id;</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>    <span class="keywordtype">float</span> distancia;        </div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>    <span class="keyword">struct </span><a class="code hl_struct" href="struct_adj.html">Adj</a>* proximo;</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno"><a class="line" href="_grafos_8h.html#acd9f17cb24ce73dde34e7a6bc62f92fb">   26</a></span>}<a class="code hl_struct" href="struct_adj.html">Adj</a>;</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno"><a class="line" href="struct_vertice.html">   31</a></span><span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code hl_struct" href="struct_vertice.html">Vertice</a> {</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    <span class="keywordtype">int</span> id;</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>    <span class="keywordtype">char</span> localizacao[MAX];</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    <span class="keywordtype">char</span> origem[MAX];</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    <span class="keywordtype">char</span> destino[MAX];</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>    <span class="keywordtype">float</span> distancia;</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>    <span class="keywordtype">bool</span> visitado;</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>    <span class="keyword">struct </span><a class="code hl_struct" href="struct_vertice.html">Vertice</a>* proximo;</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    <span class="keyword">struct </span><a class="code hl_struct" href="struct_adj.html">Adj</a>* adj;</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>    <span class="keyword">struct </span><a class="code hl_struct" href="struct_lista_cliente.html">ListaCliente</a>* cliente;</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>    <span class="keyword">struct </span><a class="code hl_struct" href="struct_lista_meio.html">ListaMeio</a>* meio;   </div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno"><a class="line" href="_grafos_8h.html#a901d403606dfb55e6d42b899c05d3347">   42</a></span>} <a class="code hl_struct" href="struct_vertice.html">Vertice</a>;</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span> </div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> </div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span> </div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span><span class="preprocessor">#pragma region VERTICE_GRAFO</span></div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span> </div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span><a class="code hl_struct" href="struct_vertice.html">Vertice</a>* <a class="code hl_function" href="_grafos_8h.html#a8ac454f3fcb706e786a30265664039c0">criarGrafo</a>();</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span><a class="code hl_struct" href="struct_vertice.html">Vertice</a>* <a class="code hl_function" href="_grafos_8h.html#a7fbe6420edf768603a4e6e63aad0f041">criarVertice</a>(<span class="keywordtype">char</span>* cidade, <span class="keywordtype">int</span> <span class="keywordtype">id</span>);</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span><a class="code hl_struct" href="struct_vertice.html">Vertice</a>* <a class="code hl_function" href="_grafos_8h.html#a4035951be8f004b719e486b68193e69f">inserirVertice</a>(<a class="code hl_struct" href="struct_vertice.html">Vertice</a>* v, <span class="keywordtype">char</span>* localizacao, <span class="keywordtype">int</span> <span class="keywordtype">id</span>, <span class="keywordtype">bool</span>* vis);</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span><a class="code hl_struct" href="struct_vertice.html">Vertice</a>* <a class="code hl_function" href="_grafos_8h.html#a873dd8e6e24e82220e88cea92e566271">destruirGrafo</a>(<a class="code hl_struct" href="struct_vertice.html">Vertice</a>* v);</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span><span class="keywordtype">void</span> <a class="code hl_function" href="_grafos_8h.html#addb5bc1b3af3767dfba82719363ba62c">mostrarGrafo</a>(<a class="code hl_struct" href="struct_vertice.html">Vertice</a>* v);</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span><a class="code hl_struct" href="struct_vertice.html">Vertice</a>* <a class="code hl_function" href="_grafos_8h.html#a75676e12246e15d151ca89ae8ad22eb4">buscarVertice</a>(<a class="code hl_struct" href="struct_vertice.html">Vertice</a>* v, <span class="keywordtype">char</span>* cidade);</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span><a class="code hl_struct" href="struct_vertice.html">Vertice</a>* <a class="code hl_function" href="_grafos_8h.html#a62ad5436d5034e089b8f6d14acca0949">buscarVerticeId</a>(<a class="code hl_struct" href="struct_vertice.html">Vertice</a>* v, <span class="keywordtype">int</span> <span class="keywordtype">id</span>);</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span><a class="code hl_struct" href="struct_vertice.html">Vertice</a>* lerGrafoFicheiro(<a class="code hl_struct" href="struct_vertice.html">Vertice</a>* v, <span class="keywordtype">char</span> nomeFicheiro[]);</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span><span class="preprocessor">#pragma endregion</span></div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span> </div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span><span class="preprocessor">#pragma region ADJ</span></div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span><a class="code hl_struct" href="struct_adj.html">Adj</a>* <a class="code hl_function" href="_grafos_8h.html#a223318d285f4ce24d8fa6c221e930461">criarAdj</a>(<span class="keywordtype">int</span> <span class="keywordtype">id</span>, <span class="keywordtype">float</span> distancia);</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span><a class="code hl_struct" href="struct_adj.html">Adj</a>* <a class="code hl_function" href="_grafos_8h.html#abe386152589701215c8d1bd778ce114b">destruirAdjacencia</a>(<a class="code hl_struct" href="struct_adj.html">Adj</a>* adj);</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span><span class="keywordtype">void</span> <a class="code hl_function" href="_grafos_8h.html#a11eea26056734c96fd735ef2f22471e7">mostrarAdj</a>(<a class="code hl_struct" href="struct_adj.html">Adj</a>* adj);</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span><span class="keywordtype">bool</span> <a class="code hl_function" href="_grafos_8h.html#a588be8bbbce08af325506846d44b6ad0">existeAdj</a>(<a class="code hl_struct" href="struct_adj.html">Adj</a>* adj, <span class="keywordtype">int</span> <span class="keywordtype">id</span>);</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span><a class="code hl_struct" href="struct_adj.html">Adj</a>* <a class="code hl_function" href="_grafos_8h.html#aba82f706f810894140b5c681b456344b">inserirAdj</a>(<a class="code hl_struct" href="struct_adj.html">Adj</a>* adj, <a class="code hl_struct" href="struct_adj.html">Adj</a>* novaAdj, <span class="keywordtype">bool</span>* vis);</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span><a class="code hl_struct" href="struct_vertice.html">Vertice</a>* <a class="code hl_function" href="_grafos_8h.html#ae1e4884244957559fc330f3027e82deb">inserirAdjVerticeId</a>(<a class="code hl_struct" href="struct_vertice.html">Vertice</a>* v, <span class="keywordtype">int</span> idInicio, <span class="keywordtype">int</span> idFim, <span class="keywordtype">float</span> distancia, <span class="keywordtype">bool</span>* vis);</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span><span class="keywordtype">int</span> <a class="code hl_function" href="_grafos_8h.html#a05f6d2a3041f2ff9dd0abbef2ebc5735">inserirMeioVertice</a>(<a class="code hl_struct" href="struct_vertice.html">Vertice</a>* v, <a class="code hl_struct" href="struct_meio_mob.html">MeioMob</a> meio);</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span><span class="keywordtype">bool</span> <a class="code hl_function" href="_grafos_8h.html#a557c9b1f0f362e6805bdba2c72e767ef">guardarVerticesFicheiro</a>(<a class="code hl_struct" href="struct_vertice.html">Vertice</a>* v, <span class="keywordtype">char</span> nomeFicheiro[]);</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span><span class="keywordtype">int</span> <a class="code hl_function" href="_grafos_8h.html#a158787fe0b2ef782044252a91c450b17">inserirClienteVertice</a>(<a class="code hl_struct" href="struct_vertice.html">Vertice</a>* v, <a class="code hl_struct" href="struct_cliente.html">Cliente</a> cliente);</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span><span class="keywordtype">int</span> <a class="code hl_function" href="_grafos_8h.html#ad78f1448bc0c333e82f87d120fc3dc24">calcularCaminho</a>(<a class="code hl_struct" href="struct_vertice.html">Vertice</a>* v, <span class="keywordtype">int</span> idorigem, <span class="keywordtype">int</span> iddestino, <span class="keywordtype">int</span> contaCaminho);</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span><span class="keywordtype">int</span> <a class="code hl_function" href="_grafos_8h.html#a7646dcbd6c55da6120e393b20ad0b175">calcularCaminhoNomeVertice</a>(<a class="code hl_struct" href="struct_vertice.html">Vertice</a>* v, <span class="keywordtype">char</span>* origem, <span class="keywordtype">char</span>* destino, <span class="keywordtype">int</span> contaCaminho);</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span><span class="keywordtype">bool</span> <a class="code hl_function" href="_grafos_8h.html#a905391a44b5c3e921b6ee43cf4a83931">existeCaminho</a>(<a class="code hl_struct" href="struct_vertice.html">Vertice</a>* v, <span class="keywordtype">int</span> origem, <span class="keywordtype">int</span> destino);</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span><span class="keywordtype">int</span> <a class="code hl_function" href="_grafos_8h.html#a9f928d9442d32566939982d39df03d33">existeCaminhoNome</a>(<a class="code hl_struct" href="struct_vertice.html">Vertice</a>* v, <span class="keywordtype">char</span>* origem, <span class="keywordtype">char</span>* destino);</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span><a class="code hl_struct" href="struct_vertice.html">Vertice</a>* <a class="code hl_function" href="_grafos_8h.html#a8bda715a05de64dafae89b04cc968104">zerarVerticeVisitado</a>(<a class="code hl_struct" href="struct_vertice.html">Vertice</a>* v);</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span><span class="keywordtype">int</span> <a class="code hl_function" href="_grafos_8h.html#ac8cd04135601f0b8d5eadb331e440ea2">listarMeiosPorTipoERaio</a>(<a class="code hl_struct" href="struct_vertice.html">Vertice</a>* v, <span class="keywordtype">char</span>* localizacaoCliente, <span class="keywordtype">char</span>* tipoMeio, <span class="keywordtype">float</span> raio);</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span> </div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span> </div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span> </div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span> </div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span><span class="keywordtype">int</span> <a class="code hl_function" href="_grafos_8h.html#aac530b8c4372e896da446fcc792c6b3b">guardarGrafoBinario</a>(<a class="code hl_struct" href="struct_vertice.html">Vertice</a>* v, <span class="keywordtype">char</span>* nomeFicheiro);</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span><span class="keywordtype">int</span> <a class="code hl_function" href="_grafos_8h.html#a4cd48448752dd366b24e671801e1fb99">guardarAdjacencia</a>(<a class="code hl_struct" href="struct_adj.html">Adj</a>* adj, <span class="keywordtype">char</span>* nomeFicheiro, <span class="keywordtype">int</span> codVerticeOrigem);</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span><span class="preprocessor">#pragma endregion</span></div>
+<div class="ttc" id="a_functions_clientes_8h_html"><div class="ttname"><a href="_functions_clientes_8h.html">FunctionsClientes.h</a></div><div class="ttdoc">Biblioteca de assinatura das funções de gestão dos clientes.</div></div>
+<div class="ttc" id="a_functions_meios_8h_html"><div class="ttname"><a href="_functions_meios_8h.html">FunctionsMeios.h</a></div><div class="ttdoc">Biblioteca de assinatura das funções de gestão dos meios de mobilidade.</div></div>
+<div class="ttc" id="a_grafos_8h_html_a05f6d2a3041f2ff9dd0abbef2ebc5735"><div class="ttname"><a href="_grafos_8h.html#a05f6d2a3041f2ff9dd0abbef2ebc5735">inserirMeioVertice</a></div><div class="ttdeci">int inserirMeioVertice(Vertice *v, MeioMob meio)</div><div class="ttdef"><b>Definition:</b> Grafos.c:114</div></div>
+<div class="ttc" id="a_grafos_8h_html_a11eea26056734c96fd735ef2f22471e7"><div class="ttname"><a href="_grafos_8h.html#a11eea26056734c96fd735ef2f22471e7">mostrarAdj</a></div><div class="ttdeci">void mostrarAdj(Adj *adj)</div><div class="ttdef"><b>Definition:</b> Grafos.c:193</div></div>
+<div class="ttc" id="a_grafos_8h_html_a158787fe0b2ef782044252a91c450b17"><div class="ttname"><a href="_grafos_8h.html#a158787fe0b2ef782044252a91c450b17">inserirClienteVertice</a></div><div class="ttdeci">int inserirClienteVertice(Vertice *v, Cliente cliente)</div><div class="ttdef"><b>Definition:</b> Grafos.c:128</div></div>
+<div class="ttc" id="a_grafos_8h_html_a223318d285f4ce24d8fa6c221e930461"><div class="ttname"><a href="_grafos_8h.html#a223318d285f4ce24d8fa6c221e930461">criarAdj</a></div><div class="ttdeci">Adj * criarAdj(int id, float distancia)</div><div class="ttdef"><b>Definition:</b> Grafos.c:183</div></div>
+<div class="ttc" id="a_grafos_8h_html_a4035951be8f004b719e486b68193e69f"><div class="ttname"><a href="_grafos_8h.html#a4035951be8f004b719e486b68193e69f">inserirVertice</a></div><div class="ttdeci">Vertice * inserirVertice(Vertice *v, char *localizacao, int id, bool *vis)</div><div class="ttdef"><b>Definition:</b> Grafos.c:35</div></div>
+<div class="ttc" id="a_grafos_8h_html_a4cd48448752dd366b24e671801e1fb99"><div class="ttname"><a href="_grafos_8h.html#a4cd48448752dd366b24e671801e1fb99">guardarAdjacencia</a></div><div class="ttdeci">int guardarAdjacencia(Adj *adj, char *nomeFicheiro, int codVerticeOrigem)</div><div class="ttdef"><b>Definition:</b> Grafos.c:267</div></div>
+<div class="ttc" id="a_grafos_8h_html_a557c9b1f0f362e6805bdba2c72e767ef"><div class="ttname"><a href="_grafos_8h.html#a557c9b1f0f362e6805bdba2c72e767ef">guardarVerticesFicheiro</a></div><div class="ttdeci">bool guardarVerticesFicheiro(Vertice *v, char nomeFicheiro[])</div><div class="ttdef"><b>Definition:</b> Grafos.c:411</div></div>
+<div class="ttc" id="a_grafos_8h_html_a588be8bbbce08af325506846d44b6ad0"><div class="ttname"><a href="_grafos_8h.html#a588be8bbbce08af325506846d44b6ad0">existeAdj</a></div><div class="ttdeci">bool existeAdj(Adj *adj, int id)</div><div class="ttdef"><b>Definition:</b> Grafos.c:214</div></div>
+<div class="ttc" id="a_grafos_8h_html_a62ad5436d5034e089b8f6d14acca0949"><div class="ttname"><a href="_grafos_8h.html#a62ad5436d5034e089b8f6d14acca0949">buscarVerticeId</a></div><div class="ttdeci">Vertice * buscarVerticeId(Vertice *v, int id)</div><div class="ttdef"><b>Definition:</b> Grafos.c:106</div></div>
+<div class="ttc" id="a_grafos_8h_html_a75676e12246e15d151ca89ae8ad22eb4"><div class="ttname"><a href="_grafos_8h.html#a75676e12246e15d151ca89ae8ad22eb4">buscarVertice</a></div><div class="ttdeci">Vertice * buscarVertice(Vertice *v, char *cidade)</div><div class="ttdef"><b>Definition:</b> Grafos.c:97</div></div>
+<div class="ttc" id="a_grafos_8h_html_a7646dcbd6c55da6120e393b20ad0b175"><div class="ttname"><a href="_grafos_8h.html#a7646dcbd6c55da6120e393b20ad0b175">calcularCaminhoNomeVertice</a></div><div class="ttdeci">int calcularCaminhoNomeVertice(Vertice *v, char *origem, char *destino, int contaCaminho)</div><div class="ttdef"><b>Definition:</b> Grafos.c:312</div></div>
+<div class="ttc" id="a_grafos_8h_html_a7fbe6420edf768603a4e6e63aad0f041"><div class="ttname"><a href="_grafos_8h.html#a7fbe6420edf768603a4e6e63aad0f041">criarVertice</a></div><div class="ttdeci">Vertice * criarVertice(char *cidade, int id)</div><div class="ttdef"><b>Definition:</b> Grafos.c:24</div></div>
+<div class="ttc" id="a_grafos_8h_html_a873dd8e6e24e82220e88cea92e566271"><div class="ttname"><a href="_grafos_8h.html#a873dd8e6e24e82220e88cea92e566271">destruirGrafo</a></div><div class="ttdeci">Vertice * destruirGrafo(Vertice *v)</div><div class="ttdef"><b>Definition:</b> Grafos.c:73</div></div>
+<div class="ttc" id="a_grafos_8h_html_a8ac454f3fcb706e786a30265664039c0"><div class="ttname"><a href="_grafos_8h.html#a8ac454f3fcb706e786a30265664039c0">criarGrafo</a></div><div class="ttdeci">Vertice * criarGrafo()</div><div class="ttdef"><b>Definition:</b> Grafos.c:17</div></div>
+<div class="ttc" id="a_grafos_8h_html_a8bda715a05de64dafae89b04cc968104"><div class="ttname"><a href="_grafos_8h.html#a8bda715a05de64dafae89b04cc968104">zerarVerticeVisitado</a></div><div class="ttdeci">Vertice * zerarVerticeVisitado(Vertice *v)</div><div class="ttdef"><b>Definition:</b> Grafos.c:169</div></div>
+<div class="ttc" id="a_grafos_8h_html_a905391a44b5c3e921b6ee43cf4a83931"><div class="ttname"><a href="_grafos_8h.html#a905391a44b5c3e921b6ee43cf4a83931">existeCaminho</a></div><div class="ttdeci">bool existeCaminho(Vertice *v, int origem, int destino)</div><div class="ttdef"><b>Definition:</b> Grafos.c:319</div></div>
+<div class="ttc" id="a_grafos_8h_html_a9f928d9442d32566939982d39df03d33"><div class="ttname"><a href="_grafos_8h.html#a9f928d9442d32566939982d39df03d33">existeCaminhoNome</a></div><div class="ttdeci">int existeCaminhoNome(Vertice *v, char *origem, char *destino)</div><div class="ttdef"><b>Definition:</b> Grafos.c:339</div></div>
+<div class="ttc" id="a_grafos_8h_html_aac530b8c4372e896da446fcc792c6b3b"><div class="ttname"><a href="_grafos_8h.html#aac530b8c4372e896da446fcc792c6b3b">guardarGrafoBinario</a></div><div class="ttdeci">int guardarGrafoBinario(Vertice *v, char *nomeFicheiro)</div><div class="ttdef"><b>Definition:</b> Grafos.c:386</div></div>
+<div class="ttc" id="a_grafos_8h_html_aba82f706f810894140b5c681b456344b"><div class="ttname"><a href="_grafos_8h.html#aba82f706f810894140b5c681b456344b">inserirAdj</a></div><div class="ttdeci">Adj * inserirAdj(Adj *adj, Adj *novaAdj, bool *vis)</div><div class="ttdef"><b>Definition:</b> Grafos.c:221</div></div>
+<div class="ttc" id="a_grafos_8h_html_abe386152589701215c8d1bd778ce114b"><div class="ttname"><a href="_grafos_8h.html#abe386152589701215c8d1bd778ce114b">destruirAdjacencia</a></div><div class="ttdeci">Adj * destruirAdjacencia(Adj *adj)</div><div class="ttdef"><b>Definition:</b> Grafos.c:200</div></div>
+<div class="ttc" id="a_grafos_8h_html_ac8cd04135601f0b8d5eadb331e440ea2"><div class="ttname"><a href="_grafos_8h.html#ac8cd04135601f0b8d5eadb331e440ea2">listarMeiosPorTipoERaio</a></div><div class="ttdeci">int listarMeiosPorTipoERaio(Vertice *v, char *localizacaoCliente, char *tipoMeio, float raio)</div><div class="ttdef"><b>Definition:</b> Grafos.c:352</div></div>
+<div class="ttc" id="a_grafos_8h_html_ad78f1448bc0c333e82f87d120fc3dc24"><div class="ttname"><a href="_grafos_8h.html#ad78f1448bc0c333e82f87d120fc3dc24">calcularCaminho</a></div><div class="ttdeci">int calcularCaminho(Vertice *v, int idorigem, int iddestino, int contaCaminho)</div><div class="ttdef"><b>Definition:</b> Grafos.c:291</div></div>
+<div class="ttc" id="a_grafos_8h_html_addb5bc1b3af3767dfba82719363ba62c"><div class="ttname"><a href="_grafos_8h.html#addb5bc1b3af3767dfba82719363ba62c">mostrarGrafo</a></div><div class="ttdeci">void mostrarGrafo(Vertice *v)</div><div class="ttdef"><b>Definition:</b> Grafos.c:88</div></div>
+<div class="ttc" id="a_grafos_8h_html_ae1e4884244957559fc330f3027e82deb"><div class="ttname"><a href="_grafos_8h.html#ae1e4884244957559fc330f3027e82deb">inserirAdjVerticeId</a></div><div class="ttdeci">Vertice * inserirAdjVerticeId(Vertice *v, int idInicio, int idFim, float distancia, bool *vis)</div><div class="ttdef"><b>Definition:</b> Grafos.c:244</div></div>
+<div class="ttc" id="astruct_adj_html"><div class="ttname"><a href="struct_adj.html">Adj</a></div><div class="ttdef"><b>Definition:</b> Grafos.h:22</div></div>
+<div class="ttc" id="astruct_cliente_html"><div class="ttname"><a href="struct_cliente.html">Cliente</a></div><div class="ttdef"><b>Definition:</b> FunctionsClientes.h:15</div></div>
+<div class="ttc" id="astruct_lista_cliente_html"><div class="ttname"><a href="struct_lista_cliente.html">ListaCliente</a></div><div class="ttdef"><b>Definition:</b> FunctionsClientes.h:23</div></div>
+<div class="ttc" id="astruct_lista_meio_html"><div class="ttname"><a href="struct_lista_meio.html">ListaMeio</a></div><div class="ttdef"><b>Definition:</b> FunctionsMeios.h:25</div></div>
+<div class="ttc" id="astruct_meio_mob_html"><div class="ttname"><a href="struct_meio_mob.html">MeioMob</a></div><div class="ttdef"><b>Definition:</b> FunctionsMeios.h:16</div></div>
+<div class="ttc" id="astruct_vertice_html"><div class="ttname"><a href="struct_vertice.html">Vertice</a></div><div class="ttdef"><b>Definition:</b> Grafos.h:31</div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Gerado por&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6
+</small></address>
+</body>
+</html>

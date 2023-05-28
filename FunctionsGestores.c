@@ -1,6 +1,6 @@
 /*****************************************************************//**
  * \file   FunctionsAux.c
- * \brief  Funções auxiliares/recursivas das demais funções.
+ * \brief  Funções dos gestores
  *
  * \author julia
  * \date   March 2023
@@ -10,14 +10,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-/**
- * Função que cria gestor.
- *
- * \param inicio
- * \param id
- * \param nome
- * \return
- */
+/** Função que cria gestor */
 ListaGestor* criarGestor(Gestor g)
 {
 	ListaGestor* novoGestor = (ListaGestor*)malloc(sizeof(ListaGestor));

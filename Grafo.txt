@@ -1,9 +1,12 @@
 - - - - - - - - 
+Vertice:     8 	| Cidade:   Itaberaba 	|
+Meio: Id:     5 	| Tipo:   bicicleta 	| Autonomia:   35,00 	| Custo:    4,00 	|
+- - - - - - - - 
 Vertice:     5 	| Cidade:   Cachoeira 	|
 Cliente Id:     1 	| Nome:       Maria 	| NIF: 333333333 	| Saldo:   30,00 	| Endereço:                    Rua do umbu 	|
 - - - - - - - - 
 Vertice:     2 	| Cidade:       Feira 	|
-Meio: Id:     3 	| Tipo:   trotinete 	| Autonomia:   50,00 	| Custo:    2,00 	|
+Meio: Id:     3 	| Tipo:   trotinete 	| Autonomia:   40,00 	| Custo:    2,00 	|
 - - - - - - - - 
 Vertice:     3 	| Cidade:     Itacare 	|
 - - - - - - - - 
@@ -18,4 +21,4 @@ Vertice:     4 	| Cidade:      Mucuge 	|
 Meio: Id:     1 	| Tipo:   trotinete 	| Autonomia:   30,00 	| Custo:    2,00 	|
 - - - - - - - - 
 Vertice:     1 	| Cidade:    Salvador 	|
-Meio: Id:     2 	| Tipo:   bicicleta 	| Autonomia:   40,00 	| Custo:    3,00 	|
+Meio: Id:     2 	| Tipo:   bicicleta 	| Autonomia:   55,00 	| Custo:    3,00 	|

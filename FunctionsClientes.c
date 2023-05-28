@@ -12,17 +12,7 @@
 #include <stdbool.h>
 #define CHAR 500
 
-/**
- * Função que cria novo cliente.
- *
- * \param inicio
- * \param id
- * \param nome
- * \param nif
- * \param morada
- * \param saldo
- * \return
- */
+/** Função que cria novo cliente */
 ListaCliente* criarCliente(Cliente c)
 {
 	ListaCliente* novoCliente = (ListaCliente*)malloc(sizeof(ListaCliente));
@@ -33,13 +23,7 @@ ListaCliente* criarCliente(Cliente c)
 	return novoCliente;
 }
 
-/**
- * Função que insere o cliente criado em uma lista.
- * 
- * \param c
- * \param inicio
- * \return 
- */
+/** Função que insere o cliente criado em uma lista */
 ListaClientePtr inserirCliente(ListaClientePtr c, Cliente* inicio)
 {
 	if (existeCliente(c, inicio->id)) return c;	
@@ -60,13 +44,7 @@ ListaClientePtr inserirCliente(ListaClientePtr c, Cliente* inicio)
 	return c;
 }
 
-/**
- * Função que verifica se o cliente de id passado por parâmetro já existe na lista.
- * 
- * \param c
- * \param id
- * \return 
- */
+/** Função que verifica se o cliente de id passado por parâmetro já existe na lista */
 bool existeCliente(ListaClientePtr c, int id) {
 
 	if (c == NULL) return false;
@@ -80,12 +58,7 @@ bool existeCliente(ListaClientePtr c, int id) {
 	return false;
 }
 
-/**
- * Função recursiva para guardar clientes da lista em um ficheiro binário.
- *
- * \param inicio
- * \return
- */
+/** Função recursiva para guardar clientes da lista em um ficheiro binário */
 bool guardarClienteBin(ListaClientePtr inicio)
 {
 	FILE* fp = fopen("Clientes.bin", "wb");
@@ -107,11 +80,7 @@ bool guardarClienteBin(ListaClientePtr inicio)
 	return true;
 }
 
-/**
- * Função que recebe a lista de clientes como parâmetro e imprime na tela os dados de todos os clientes.
- *
- * \param inicio
- */
+/** Função que recebe a lista de clientes como parâmetro e imprime na tela os dados de todos os clientes */
 void listarClientes(ListaClientePtr inicio)
 {
 	ListaClientePtr aux = inicio;
@@ -123,11 +92,7 @@ void listarClientes(ListaClientePtr inicio)
 	}
 }
 
-/**
- * Função para imprimir os dados de um só cliente.
- * 
- * \param no
- */
+/** Função para imprimir os dados de um só cliente */
 void MostraCliente(ListaClientePtr no)
 {
 	if (no != NULL) {
@@ -137,13 +102,7 @@ void MostraCliente(ListaClientePtr no)
 	}
 }
 
-/**
- * Função para remoção de uma struct Cliente da lista através do seu id.
- *
- * \param inicio
- * \param identificador
- * \return
- */
+/** Função para remoção de uma struct Cliente da lista através do seu id */
 ListaClientePtr removerCliente(ListaClientePtr inicio, int identificador)
 {
 	ListaClientePtr atual = inicio;
@@ -172,13 +131,7 @@ ListaClientePtr removerCliente(ListaClientePtr inicio, int identificador)
 	return (inicio);
 }
 
-/**
- * Função recursiva para buscar um nó na lista de clientes.
- *
- * \param inicio
- * \param identificador
- * \return
- */
+/** Função recursiva para buscar um nó na lista de clientes */
 ListaClientePtr buscarCliente(ListaClientePtr inicio, int identificador) {
 	
 	ListaClientePtr atual = inicio;
@@ -192,20 +145,10 @@ ListaClientePtr buscarCliente(ListaClientePtr inicio, int identificador) {
 	return NULL; //não sendo nenhum encontrado, retorna null
 }
 
-/**
- * função que altera os dados da struct Cliente dentro da lista.
- *
- * \param inicio
- * \param identificador
- * \param novoid
- * \param novonome
- * \param novonif
- * \param novamorada
- * \param novosaldo
- */
+/** Função que altera os dados da struct Cliente dentro da lista */
 ListaClientePtr alterarCliente(ListaClientePtr inicio, int identificador, int novoid, char novonome[], int novonif, char novamorada[], float novosaldo) {
 	
-	ListaClientePtr cliente = buscarCliente(inicio, identificador); 
+	ListaClientePtr cliente = buscarCliente(inicio, identificador); //busca cliente na lista através do id informado
 	if (cliente != NULL) {
 		cliente->cliente.id = novoid;
 		strcpy(cliente->cliente.nome, novonome);
@@ -213,17 +156,10 @@ ListaClientePtr alterarCliente(ListaClientePtr inicio, int identificador, int no
 		strcpy(cliente->cliente.morada, novamorada);
 		cliente->cliente.saldo = novosaldo;
 
-	} return inicio;
+	} return inicio; //retorna a lista de cliente com as alterações realizadas
 }
 
-
-/**
- * Função que lê um ficheiro de texto contendo os dados de um cliente, e insere-os em uma lista.
- * 
- * \param inicio
- * \param nomeFicheiro
- * \return 
- */
+/** Função que lê um ficheiro de texto contendo os dados de um cliente, e insere-os em uma lista */
 ListaClientePtr lerFicheiroCliente(ListaClientePtr inicio,  char nomeFicheiro[]) {
 	FILE* fp;
 	fp = fopen(nomeFicheiro, "r");
@@ -238,7 +174,7 @@ ListaClientePtr lerFicheiroCliente(ListaClientePtr inicio,  char nomeFicheiro[])
 	
 
 	char linha[256];
-	while (fgets(linha, sizeof(linha), fp) != NULL) {
+	while (fgets(linha, sizeof(linha), fp) != NULL) { //laço para ler cada linha não nula e armazenar na variavel linha
 		if (sscanf(linha, "%d;%[^;];%d;%[^;];%f", &aux.id, aux.nome, &aux.nif, aux.morada, &aux.saldo) == 5) {
 			ListaClientePtr novoCliente = criarCliente(aux); 
 			c = inserirCliente(c, novoCliente); 

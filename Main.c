@@ -44,6 +44,8 @@ int main() {
 	m = inserirMeio(m, &m3);
 	MeioMob m4 = {4, "bicicleta", 70, 70, 3, "Itacare"};
 	m = inserirMeio(m, &m4);
+	MeioMob m5 = {5, "bicicleta", 35, 35, 4, "Itaberaba" };
+	m = inserirMeio(m, &m5);
 
 	c = alterarCliente(c, 1, 7, "Maria", 777777777, "Rua da siriguela", 35.00);
 
@@ -104,7 +106,7 @@ int main() {
 	grafo = inserirAdjVerticeId(grafo, 7, 2, 100, &vis); //  insere adjacencia de juazeiro para feira
 	grafo = inserirAdjVerticeId(grafo, 7, 3, 100, &vis); //  insere adjacencia de juazeiro para itacare
 	grafo = inserirAdjVerticeId(grafo, 5, 2, 30, &vis);  //  insere adjacencia de itacimirim para feira
-
+	//grafo = inserirAdjVerticeId(grafo, 6, 8, 30, &vis);  //  insere adjacencia de itacimirim para itaberaba
 
 
 	Vertice* vertice1 = buscarVerticeId(grafo, 4);
@@ -140,6 +142,11 @@ int main() {
 	Vertice* vertice7 = buscarVerticeId(grafo, 3);
 	if (vertice7 != NULL) {
 		inserirMeioVertice(vertice6, m4);
+	}
+
+	Vertice* vertice8 = buscarVerticeId(grafo, 8);
+	if (vertice8 != NULL) {
+		inserirMeioVertice(vertice8, m5);
 	}
 
 	//guardarVerticesFicheiro(grafo, "Vertices.txt");

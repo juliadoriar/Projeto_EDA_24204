@@ -11,12 +11,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-/**
- * Função que cria um aluguer dentro da estrutura ListaAluguer.
- * 
- * \param a
- * \return 
- */
+/** Função que cria um aluguer dentro da estrutura ListaAluguer */
 ListaAluguerPtr criarAluguer(Aluguer* a)
 {
 	ListaAluguerPtr novoAluguer = (ListaAluguer*)malloc(sizeof(ListaAluguer));
@@ -27,14 +22,7 @@ ListaAluguerPtr criarAluguer(Aluguer* a)
 	return novoAluguer;
 }
 
-/**
- * Função para inserir o aluguer criado em uma lista encadeada de alugueres.
- * 
- * \param inicio
- * \param a
- * \param c
- * \return 
- */
+/** Função para inserir o aluguer criado em uma lista encadeada de alugueres */
 ListaAluguerPtr inserirAluguer(ListaAluguerPtr inicio, Aluguer* a, Cliente* c)
 {
 	if (existeAluguer(inicio, a->id)) return inicio;
@@ -60,14 +48,7 @@ ListaAluguerPtr inserirAluguer(ListaAluguerPtr inicio, Aluguer* a, Cliente* c)
 	return novoAluguer;
 }
 
-
-/**
- * Função recursiva para obter a informação se existe ou não o aluguer passado por parâmetro dentro da lista.
- * 
- * \param a
- * \param id
- * \return 
- */
+/** Função recursiva para obter a informação se existe ou não o aluguer passado por parâmetro dentro da lista */
 bool existeAluguer(ListaAluguerPtr a, int id) {
 
 	if (a == NULL) return false;
@@ -80,14 +61,7 @@ bool existeAluguer(ListaAluguerPtr a, int id) {
 	return false;
 }
 
-
-
-/**
- * Função para guardar a lista de alugueres em um ficheiro binário.
- *
- * \param inicio
- * \param arquivo
- */
+/** Função para guardar a lista de alugueres em um ficheiro binário */
 bool guardarAluguerBin(ListaAluguerPtr* inicio, char arquivo) {
 	FILE* fp = fopen(arquivo, "wb");
 	if (inicio == NULL) return false;
@@ -110,11 +84,7 @@ bool guardarAluguerBin(ListaAluguerPtr* inicio, char arquivo) {
 	return true;
 }
 
-/**
- * Função que lista os alugueres em memória na tela.
- *
- * \param inicio
- */
+/** Função que lista os alugueres em memória na tela */
 bool listarAlugueres(ListaAluguerPtr* inicio)
 {
 	FILE* fp = fopen("Aluguer.txt", "a");
@@ -134,11 +104,7 @@ bool listarAlugueres(ListaAluguerPtr* inicio)
 	return true;
 }
 
-/**
- * Função recursiva que imprime para a tela os dados de um aluguer.
- * 
- * \param no
- */
+/** Função recursiva que imprime para a tela os dados de um aluguer */
 void MostraAluguer (Aluguer* no)
 {
 	if (no != NULL) {
